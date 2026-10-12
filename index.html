@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0F6E56">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Fit21 出發鍵">
+  <meta name="description" content="Fit21 出發鍵：不必想一整天，只要開始第一步。專為體重管理事業經營者打造的行動啟動工具。">
+
+  <title>Fit21 出發鍵</title>
+
+  <!-- PWA Manifest & Icons -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app" class="app-container">
+    
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo-circle">
+          <svg viewBox="0 0 24 24" class="logo-svg" aria-hidden="true">
+            <polygon points="9,6 18,12 9,18" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-title">Fit21 出發鍵</h1>
+          <span class="brand-version">V1.0</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Install PWA button (shown if browser supports beforeinstallprompt) -->
+        <button id="btn-install-prompt" class="btn-icon-label hidden" title="加到主畫面" aria-label="加到主畫面">
+          <span>📲</span> 加到桌面
+        </button>
+        <button id="btn-nav-history" class="btn-icon" title="歷史紀錄與統計" aria-label="歷史紀錄與統計">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 8v4l3 3"/>
+            <circle cx="12" cy="12" r="9"/>
+          </svg>
+        </button>
+        <button id="btn-nav-settings" class="btn-icon" title="資料與設定" aria-label="資料與設定">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+      <!-- ================= SCREEN 1: 首頁 ================= -->
+      <section id="screen-home" class="screen screen-home active">
+        <div class="home-hero">
+          <div class="home-motto-badge">Fit21 行動哲學</div>
+          <h2 class="home-title">先出發就好。</h2>
+          <p class="home-subtitle">不必想一整天，只要開始第一步。</p>
+        </div>
+
+        <!-- Optional Pre-Departure Fatigue Rating -->
+        <div class="card fatigue-card">
+          <div class="card-header-compact">
+            <span class="card-label">出發前感受（選填）</span>
+            <span id="pre-fatigue-status" class="card-status-text">可跳過</span>
+          </div>
+          <p class="fatigue-question">現在想到出門，覺得有多累？</p>
+          <div class="rating-group" id="pre-fatigue-group">
+            <button type="button" class="rating-btn" data-score="1">
+              <span class="rating-num">1</span>
+              <span class="rating-tag">極輕鬆</span>
+            </button>
+            <button type="button" class="rating-btn" data-score="2">
+              <span class="rating-num">2</span>
+              <span class="rating-tag">還好</span>
+            </button>
+            <button type="button" class="rating-btn" data-score="3">
+              <span class="rating-num">3</span>
+              <span class="rating-tag">普通</span>
+            </button>
+            <button type="button" class="rating-btn" data-score="4">
+              <span class="rating-num">4</span>
+              <span class="rating-tag">有點累</span>
+            </button>
+            <button type="button" class="rating-btn" data-score="5">
+              <span class="rating-num">5</span>
+              <span class="rating-tag">好不想動</span>
+            </button>
+          </div>
+          <div class="fatigue-hint">
+            <span id="pre-fatigue-selected-hint">直接點擊下方「我現在出發」即可，不需強制填寫</span>
+            <button type="button" id="btn-clear-pre-fatigue" class="btn-text-subtle hidden">清除選擇</button>
+          </div>
+        </div>
+
+        <!-- Center Huge Action Button -->
+        <div class="home-cta-wrapper">
+          <button id="btn-start-now" class="btn-giant-start" type="button">
+            <div class="btn-giant-inner">
+              <div class="btn-giant-icon">
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+                  <polygon points="8,5 19,12 8,19"/>
+                </svg>
+              </div>
+              <span class="btn-giant-text">我現在出發</span>
+              <span class="btn-giant-sub">點擊立即進入邀約模式</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Gentle Affirmation Box -->
+        <div class="gentle-tip-box">
+          <div class="tip-icon">✨</div>
+          <div class="tip-text">
+            <strong>給30年專業底氣的自己：</strong><br>
+            恐懼與倦怠只停留在出門前。只要站在街頭開口第一句，節奏就會自然流動。
+          </div>
+        </div>
+
+        <!-- Weekly Summary Pill -->
+        <div id="home-weekly-pill" class="weekly-pill-box" style="display: none;">
+          <!-- dynamically populated -->
+        </div>
+      </section>
+
+      <!-- ================= SCREEN 2: 邀約模式 ================= -->
+      <section id="screen-active" class="screen screen-active">
+        <!-- Top Status Bar -->
+        <div class="active-status-bar card">
+          <div class="status-meta">
+            <span class="status-indicator-live">
+              <span class="status-dot"></span> 邀約進行中
+            </span>
+            <span id="active-current-date" class="status-date">2026年10月12日</span>
+          </div>
+
+          <div class="timer-display-box">
+            <span class="timer-label">已出發時間</span>
+            <div id="active-timer" class="timer-digits">00:00:00</div>
+            <div id="active-start-time-text" class="timer-sub">出發時間：--:--</div>
+          </div>
+        </div>
+
+        <!-- Milestone: "我已經開口了" Button -->
+        <div class="milestone-container">
+          <div id="box-first-talk-cta" class="first-talk-cta">
+            <button id="btn-first-talk" class="btn-gold-action" type="button">
+              <div class="btn-gold-icon">🗣️</div>
+              <div class="btn-gold-content">
+                <span class="btn-gold-title">我已經開口了</span>
+                <span class="btn-gold-subtitle">點擊記錄今天第一次開口（打破阻力！）</span>
+              </div>
+            </button>
+          </div>
+
+          <div id="box-first-talk-badge" class="first-talk-badge hidden">
+            <div class="badge-icon">🎉</div>
+            <div class="badge-content">
+              <div class="badge-title">今天已經順利開口！</div>
+              <div id="badge-talk-time-text" class="badge-desc">首次開口時間：出發後 -- 分鐘</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Simple Counters -->
+        <div class="counters-section">
+          <!-- Counter 1: 開口邀約 -->
+          <div class="counter-card" id="counter-card-invites">
+            <div class="counter-info">
+              <div class="counter-header">
+                <span class="counter-emoji">🗣️</span>
+                <h3 class="counter-title">開口邀約</h3>
+              </div>
+              <p class="counter-desc">主動街頭對話</p>
+            </div>
+            <div class="counter-controls">
+              <button type="button" class="btn-counter-sub" data-type="invites" aria-label="減少開口邀約">
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+              <span class="counter-value" id="val-invites">0</span>
+              <button type="button" class="btn-counter-add" data-type="invites" aria-label="增加開口邀約">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Counter 2: 進店試飲 -->
+          <div class="counter-card" id="counter-card-tastings">
+            <div class="counter-info">
+              <div class="counter-header">
+                <span class="counter-emoji">🍵</span>
+                <h3 class="counter-title">進店試飲</h3>
+              </div>
+              <p class="counter-desc">進店了解或試飲體驗</p>
+            </div>
+            <div class="counter-controls">
+              <button type="button" class="btn-counter-sub" data-type="tastings" aria-label="減少進店試飲">
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+              <span class="counter-value" id="val-tastings">0</span>
+              <button type="button" class="btn-counter-add" data-type="tastings" aria-label="增加進店試飲">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Counter 3: 預約客戶 -->
+          <div class="counter-card" id="counter-card-appointments">
+            <div class="counter-info">
+              <div class="counter-header">
+                <span class="counter-emoji">📅</span>
+                <h3 class="counter-title">預約客戶</h3>
+              </div>
+              <p class="counter-desc">約定諮詢或留下預約</p>
+            </div>
+            <div class="counter-controls">
+              <button type="button" class="btn-counter-sub" data-type="appointments" aria-label="減少預約客戶">
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+              <span class="counter-value" id="val-appointments">0</span>
+              <button type="button" class="btn-counter-add" data-type="appointments" aria-label="增加預約客戶">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- End Session Button -->
+        <div class="active-footer">
+          <button id="btn-end-session" class="btn-danger-outline" type="button">
+            結束這次邀約
+          </button>
+        </div>
+      </section>
+
+      <!-- ================= SCREEN 3: 完成畫面 ================= -->
+      <section id="screen-complete" class="screen screen-complete">
+        <!-- Encouragement Banner -->
+        <div class="complete-header-card card">
+          <div class="complete-badge">✨ 邀約完成</div>
+          <h2 class="complete-encouragement-title">今天最重要的，<br>是妳已經開始。</h2>
+          <p class="complete-encouragement-sub">跨出大門的那一刻，妳就已經克服了最大的阻力。</p>
+        </div>
+
+        <!-- Session Result Stats Grid -->
+        <div class="card result-card">
+          <h3 class="result-title">本次邀約成果</h3>
+          <div class="result-metrics-grid">
+            <div class="result-metric-item">
+              <span class="metric-label">邀約時間</span>
+              <span id="res-duration" class="metric-value">0 分鐘</span>
+            </div>
+            <div class="result-metric-item">
+              <span class="metric-label">首次開口</span>
+              <span id="res-first-talk" class="metric-value">--</span>
+            </div>
+            <div class="result-metric-item">
+              <span class="metric-label">開口邀約</span>
+              <span id="res-invites" class="metric-value highlight">0 人</span>
+            </div>
+            <div class="result-metric-item">
+              <span class="metric-label">進店試飲</span>
+              <span id="res-tastings" class="metric-value highlight">0 人</span>
+            </div>
+            <div class="result-metric-item full-width">
+              <span class="metric-label">預約客戶</span>
+              <span id="res-appointments" class="metric-value gold-highlight">0 人</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Optional Post-Departure Fatigue Rating -->
+        <div class="card fatigue-card" id="post-fatigue-card">
+          <div class="card-header-compact">
+            <span class="card-label">心理感受紀錄（選填）</span>
+            <span id="post-fatigue-status" class="card-status-text">可跳過</span>
+          </div>
+          <p class="fatigue-question">實際做完後，覺得有多累？</p>
+          <div class="rating-group" id="post-fatigue-group">
+            <button type="button" class="rating-btn" data-score="1">
+              <span class="rating-num">1</span>
+              <span class="rating-tag">極輕鬆</span>
+            </button>
+            <button type="button" class="rating-btn" data-score="2">
+              <span class="rating-num">2</span>
+              <span class="rating-tag">還好</span>
+            </button>
+            <button type="button" class="rating-btn" data-score="3">
+              <span class="rating-num">3</span>
+              <span class="rating-tag">普通</span>
+            </button>
+            <button type="button" class="rating-btn" data-score="4">
+              <span class="rating-num">4</span>
+              <span class="rating-tag">有點累</span>
+            </button>
+            <button type="button" class="rating-btn" data-score="5">
+              <span class="rating-num">5</span>
+              <span class="rating-tag">很累</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Before & After Fatigue Comparison Display -->
+        <div id="fatigue-compare-card" class="card fatigue-compare-card hidden">
+          <div class="compare-header">
+            <span class="compare-icon">💡</span>
+            <h4 class="compare-title">出發前後感受對照</h4>
+          </div>
+          <div class="compare-scores-row">
+            <div class="compare-item">
+              <span class="compare-label">出發前</span>
+              <span id="cmp-pre-score" class="compare-badge pre">4 分</span>
+            </div>
+            <div class="compare-arrow">➔</div>
+            <div class="compare-item">
+              <span class="compare-label">完成後</span>
+              <span id="cmp-post-score" class="compare-badge post">2 分</span>
+            </div>
+          </div>
+          <div id="cmp-insight-text" class="compare-neutral-note">
+            出發前：4分 ➔ 完成後：2分
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="complete-actions">
+          <button id="btn-back-home" class="btn-primary" type="button">回到首頁</button>
+          <button id="btn-view-history-from-complete" class="btn-secondary" type="button">查看歷史紀錄</button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ================= MODAL: 歷史紀錄與統計 ================= -->
+    <div id="modal-history" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="history-modal-title">
+      <div class="modal-panel">
+        <div class="modal-header">
+          <h2 id="history-modal-title" class="modal-title">歷史紀錄與本週統計</h2>
+          <button id="btn-close-history" class="btn-icon-close" aria-label="關閉">✕</button>
+        </div>
+
+        <div class="modal-body">
+          <!-- Weekly Summary Box -->
+          <div class="weekly-stats-card">
+            <div class="weekly-header">
+              <span class="weekly-badge">本週統計</span>
+              <span id="weekly-range-text" class="weekly-date-range">--</span>
+            </div>
+            <div class="weekly-grid">
+              <div class="weekly-stat-item">
+                <span class="weekly-num" id="stat-departures">0</span>
+                <span class="weekly-lbl">出發次數</span>
+              </div>
+              <div class="weekly-stat-item">
+                <span class="weekly-num" id="stat-invites">0</span>
+                <span class="weekly-lbl">總邀約人數</span>
+              </div>
+              <div class="weekly-stat-item">
+                <span class="weekly-num" id="stat-tastings">0</span>
+                <span class="weekly-lbl">進店試飲</span>
+              </div>
+              <div class="weekly-stat-item">
+                <span class="weekly-num" id="stat-appointments">0</span>
+                <span class="weekly-lbl">預約客戶</span>
+              </div>
+              <div class="weekly-stat-item full-width">
+                <span class="weekly-lbl">總邀約累積時間</span>
+                <span class="weekly-time-num" id="stat-total-time">0 小時 0 分鐘</span>
+              </div>
+            </div>
+            <div class="weekly-reassurance">
+              不必執著數字多少，每次跨出門都是了不起的開始。
+            </div>
+          </div>
+
+          <!-- History List Section -->
+          <div class="history-list-section">
+            <h3 class="section-subtitle">每次出發紀錄</h3>
+            <div id="history-list-container" class="history-list">
+              <!-- Dynamically populated or empty state -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= MODAL: 資料與設定 (備份/安裝指南) ================= -->
+    <div id="modal-settings" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title">
+      <div class="modal-panel">
+        <div class="modal-header">
+          <h2 id="settings-modal-title" class="modal-title">資料備份與說明</h2>
+          <button id="btn-close-settings" class="btn-icon-close" aria-label="關閉">✕</button>
+        </div>
+
+        <div class="modal-body">
+          <!-- Backup Card -->
+          <div class="card backup-card">
+            <h3 class="card-subtitle">資料備份與還原</h3>
+            <p class="card-explain">本 App 所有紀錄均安全保存在手機瀏覽器本機端（localStorage），重新整理或斷網皆不會遺失。您可隨時匯出備份檔案。</p>
+            
+            <div class="backup-actions">
+              <button id="btn-export-json" class="btn-secondary" type="button">
+                📤 匯出備份 (JSON)
+              </button>
+              <label for="input-import-json" class="btn-secondary btn-file-label">
+                📥 匯入還原 (JSON)
+                <input type="file" id="input-import-json" accept=".json" class="hidden-file-input">
+              </label>
+            </div>
+            <div id="backup-status-msg" class="backup-status-text"></div>
+          </div>
+
+          <!-- Android PWA Install Guidance Card -->
+          <div class="card pwa-guide-card">
+            <h3 class="card-subtitle">📲 如何安裝在 Android 手機桌面</h3>
+            <ol class="pwa-steps-list">
+              <li>使用 <strong>Android Chrome 瀏覽器</strong> 打開本頁面。</li>
+              <li>點擊右上角的選單按鈕（三個點點 <strong>⋮</strong>）。</li>
+              <li>在選單中點選 <strong>「加到主畫面」</strong> 或 <strong>「安裝應用程式」</strong>。</li>
+              <li>點選確認，手機桌面即會出現 <strong>Fit21 出發鍵</strong> 圖示。</li>
+              <li>之後可直接點桌面圖示打開，享受全螢幕、離線順暢的使用體驗！</li>
+            </ol>
+            <div class="offline-badge">
+              <span class="offline-dot"></span> 支援全離線操作，無網路也能正常計時與計數
+            </div>
+          </div>
+
+          <!-- App Concept Card -->
+          <div class="card concept-card">
+            <h3 class="card-subtitle">關於 Fit21 出發鍵</h3>
+            <p class="concept-text">
+              「先出發就好，不必想一整天，只要開始第一步。」<br><br>
+              這不是督促業績的系統，而是一把陪伴妳跨出家門的鑰匙。30年的街頭邀約功力一直都在，妳只需要按下按鈕，帶著輕鬆的心情出門走走。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= CONFIRMATION MODAL ================= -->
+    <div id="modal-confirm" class="modal-overlay hidden" role="dialog" aria-modal="true">
+      <div class="modal-dialog">
+        <h3 id="confirm-modal-title" class="dialog-title">結束這次邀約？</h3>
+        <p id="confirm-modal-desc" class="dialog-desc">即將結算本次的邀約時間與人數紀錄。</p>
+        <div class="dialog-actions">
+          <button id="btn-confirm-cancel" class="btn-secondary" type="button">繼續邀約</button>
+          <button id="btn-confirm-ok" class="btn-primary" type="button">確認結束</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden" aria-live="polite"></div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#148367"/>
+      <stop offset="100%" stop-color="#0F6E56"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#073B2E" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="512" height="512" rx="115" fill="url(#bgGradient)"/>
+  
+  <!-- Outer Gold Ring -->
+  <circle cx="256" cy="256" r="186" fill="none" stroke="#C9A86A" stroke-width="12" stroke-dasharray="8 6" opacity="0.6"/>
+  <circle cx="256" cy="256" r="172" fill="none" stroke="#C9A86A" stroke-width="6"/>
+
+  <!-- Top GO text -->
+  <text x="256" y="145" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang TC', 'Noto Sans TC', sans-serif" font-weight="800" font-size="44" fill="#FBF6EC" letter-spacing="4">出發</text>
+
+  <!-- Triangle / Launch Chevron -->
+  <g filter="url(#shadow)">
+    <polygon points="220,185 340,256 220,327" fill="#FBF6EC"/>
+  </g>
+
+  <!-- Fit21 Text -->
+  <text x="256" y="415" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang TC', 'Noto Sans TC', sans-serif" font-weight="900" font-size="76" fill="#C9A86A" letter-spacing="2">Fit21</text>
+</svg>
